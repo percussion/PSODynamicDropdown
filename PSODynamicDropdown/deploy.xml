@@ -1,0 +1,82 @@
+<project name="Rhino Dynamic Delivery Deploy" default="dist" basedir=".">
+	<description>
+       Deployment Script DynamicDropDown
+    </description>
+    
+    <property environment="env"/>
+	<!-- base directory of Rhythmyx installation --> 
+	<property name="rx.home" location="${env.RHYTHMYX_HOME}"/>
+	<!-- name of our output jar --> 
+	
+	<property name="lib" location="lib"/>
+	
+	<property name="rx.resources" value="${rx.home}/rx_resources"/>
+	<property name="rx.stylesheets" value="${rx.resources}/stylesheets"/>
+	<property name="rx.js" value="${rx.resources}/js"/>
+	<property name="rx.controls" value="${rx.resources}/stylsheets/rx_Templates.xsl"/>
+	
+	<property name="rx.deploy" value="${rx.home}/AppServer/server/rx/deploy" /> 
+	<property name="rx.rxapp"  value="${rx.deploy}/rxapp.ear/rxapp.war" /> 
+	<property name="rx.rxpub"  value="${rx.deploy}/RxServices.war"/> 
+	<property name="rx.rxapp.lib"    value="${rx.rxapp}/WEB-INF/lib"/>
+	
+	<property name="rx.rxpub.lib" value="${rx.rxpub}/WEB-INF/lib" />
+	<property name="rx.rxpub.spring-config" value="${rx.rxpub}/WEB-INF/config/spring" /> 
+		
+	<property name="rx.rxapp" value="${rx.deploy}/rxapp.ear/rxapp.war" />
+	<property name="rx.rxapp.web-inf" value="${rx.rxapp}/WEB-INF" />
+	<property name="rx.spring" value="${rx.rxapp.web-inf}/config/user/spring"/>
+	<property name="rx.rxapp.lib" value="${rx.rxapp.web-inf}/lib" />
+	<property name="rx.rxapp.pages" value="${rx.deploy}/rxapp.ear/rxapp.war/user/pages" />
+	
+	
+	<target name="installControl" description="adds the necessary property to the UserDispatcher-servlet and copies the new file">
+	<!--  Will keep this manual untill there is a better way of
+	preventing conflicts with templates already installed 
+			<echo>Merging control into rx_Templates.xsl</echo>
+			<delete dir="xtmp" />
+			<mkdir dir="xtmp" />
+			<copy file="${rx.stylesheets}/rx_Templates.xsl" todir="xtmp"/>
+			<xslt in="xtmp/rx_Templates.xsl" style="addControl.xslt" out="xtmp/Output.xml" force="yes">
+				 <xmlcatalog refid="rx_dtds"/>
+				
+			</xslt>
+			<echo>Updated rx_Templates.xsl</echo>
+			<copy file="xtmp/Output.xml" tofile="${rx.stylesheets}/rx_Templates.xsl" verbose="true" />
+			<delete dir="xtmp" />
+-->
+	</target>
+		
+	<target name="web-inf" description="webinf">
+			<fail unless="rx.rxapp.web-inf" message="You must set the RHYTHMYX_HOME environment variable" />
+			<!-- <copy todir="${rx.rxapp.web-inf}/${target.prefix}" verbose="true">
+				<fileset dir="WEB-INF/${target.prefix}"/>
+			</copy>
+			-->
+			<copy todir="${rx.spring}" verbose="true">
+				<fileset dir="spring">
+					<include name="**" />
+				</fileset>
+			</copy>
+		<copy todir="${rx.rxapp.pages}" verbose="true">
+			<fileset dir="pages">
+				<include name="**" />
+			</fileset>
+		</copy>
+		</target>
+	
+	<target name="dist" description="Default target deploys all">
+		<fail unless="rx.home" message="You must set the RHYTHMYX_HOME environment variable" />		
+		 <echo>Deploying Control</echo>
+			<copy todir="${rx.js}" verbose="true" overwrite="true" 
+				preservelastmodified="true" >
+			   <fileset dir="Rhythmyx/rx_resources/js">
+				  <include name="**" />
+			   </fileset>
+			</copy> 
+		<antcall target="installControl" />
+	</target>
+	
+	
+	
+</project>    

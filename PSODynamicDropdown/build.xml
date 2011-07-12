@@ -1,0 +1,29 @@
+<project name="PSODynamicDropdown" default="dist" basedir=".">
+	<description>
+		Builds the PSO DynamicDropDown
+    </description>
+	<!-- set global properties for this build -->
+	<property environment="env" />
+	<property name="build.sysclasspath" value="ignore" />
+
+
+	<property environment="env" />
+
+	
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp/>
+	</target>
+	
+	<target name="dist">
+		<zip destfile="${ant.project.name}.zip">
+			<zipfileset dir="." prefix="${ant.project.name}"> 
+				<include name="Rhythmyx/**"/>
+				<include name="deploy.xml"/>
+				<include name="addControl.xslt"/>
+			</zipfileset>
+		</zip>
+	</target>
+	
+	
+</project>
