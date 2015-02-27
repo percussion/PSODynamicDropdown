@@ -165,10 +165,6 @@ onchange    %Script;       #IMPLIED
 		   </psxctl:Param>
 		</psxctl:ParamList>
 		<psxctl:AssociatedFileList>
-		    <psxctl:FileDescriptor name="jquery.js" type="script" mimetype="text/javascript">
-				<psxctl:FileLocation>../sys_resources/js/jquery/jquery.js</psxctl:FileLocation>
-				<psxctl:Timestamp/>
-			</psxctl:FileDescriptor>
 			  <psxctl:FileDescriptor name="jquery.form.js" type="script" mimetype="text/javascript">
 				<psxctl:FileLocation>../rx_resources/js/jquery/jquery.form.js</psxctl:FileLocation>
 				<psxctl:Timestamp/>
